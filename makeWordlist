@@ -1,0 +1,24 @@
+import itertools
+
+# Kullanıcıdan isim, soyisim ve doğum tarihi alınır
+isim = input("Lütfen isminizi girin: ")
+soyisim = input("Lütfen soyisminizi girin: ")
+dogum_tarihi = input("Lütfen doğum tarihinizi girin (örneğin: 01012000): ")
+
+# Karakterler birleştirilir
+karakterler = isim + soyisim + dogum_tarihi
+
+# Wordlist dosyasını oluşturur ve kombinasyonları dosyaya yazar
+with open("wordlist.txt", "w") as dosya:
+    def kombinasyon_olustur(kalan, olusturulan):
+        if len(kalan) == 0:
+            dosya.write("".join(olusturulan) + "\n")
+        else:
+            for i in range(len(kalan)):
+                yeni_kalan = kalan[:i] + kalan[i+1:]
+                yeni_olusturulan = olusturulan + [kalan[i]]
+                kombinasyon_olustur(yeni_kalan, yeni_olusturulan)
+
+    kombinasyon_olustur(karakterler, [])
+
+print("Wordlist başarıyla oluşturuldu ve 'wordlist.txt' olarak kaydedildi.")
